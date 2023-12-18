@@ -53,7 +53,7 @@ def getZochitikaById(id):
 def searchZochitika():
     keyword = request.args.get('keyword')
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM zochitika WHERE your_field LIKE %s", ('%' + keyword + '%',))
+    cur.execute("SELECT * FROM zochitika WHERE title LIKE %s OR description LIKE %s",('%' + keyword + '%', '%' + keyword + '%',))
     rv = cur.fetchall()
     json_data = []
     row_headers = [x[0] for x in cur.description] #extracting row headers
@@ -70,7 +70,7 @@ def searchZochitika():
 def filterZochitika():
     date = request.args.get('date')
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM zochitika WHERE your_date_field = %s", (date,))
+    cur.execute("SELECT * FROM zochitika WHERE date = %s", (date,))
     rv = cur.fetchall()
     json_data = []
     row_headers = [x[0] for x in cur.description] #extracting row headers
